@@ -1,36 +1,212 @@
-
-To install terraform on a Windows/Linux machine and build, apply, and destroy EC2 instance
-over AWS using Terraform.(CODE)
+EC2 Using Terraform
 # Configure the AWS Provider
 provider "aws" {
   access_key = ""
   secret_key = ""
-  region     = "us-east-1"
+  region = "us-east-1"
 }
 
-# Launch an EC2 instance
+# Launch EC2 Instances
 resource "aws_instance" "terraformUser" {
-  ami           = ""  # Replace with a region-specific valid AMI
+  ami           = ""  # Replace with a valid AMI for your region
   instance_type = "t3.micro"
-  count = 3
+  count         = 3
 
   tags = {
-Name = "praj"
-}
+    Name = "praj"
+  }
 }
 
-Q5) To deploy Docker and build, apply, and destroy docker image using Terraform.
-terraform{
-required_providers{
-docker={
-source="kreuzwerker/docker"
-version="2.14.0"
+
+SONARQUBE JAVA
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, SonarQube!");
+    }
 }
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        String password = "12345"; // Hardcoded password (security issue)
+        int unusedVar = 10; // Unused variable
+        System.out.println("Hello SonarQube")
+    }
 }
+
+SONARQUBE PYTHON
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("SonarQube")
+
+def greet(name):
+    print("Hello " + name)
+    password = "admin123"  # Hardcoded credential
+    return 42  # Useless return value
+
+greet("SonarQube")
+
+
+SONARQUBE HTML
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SonarQube Test</title>
+</head>
+<body>
+    <h1>Hello, SonarQube!</h1>
+</body>
+</html>
+
+<html>
+<head>
+<title>SonarQube Test<title>
+</head>
+<body>
+<h1>Hello SonarQube
+<script>alert('XSS vulnerability!')</script>
+</body>
+</html>
+
+NGINX web server container using Terraform with Docker 
+docker22.tf
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 3.0.2"
+    }
+  }
 }
-provider "docker"{
-host="npipe:////.//pipe//docker_engine"
+provider "docker" {}
+resource "docker_image" "nginx_image" {
+  name         = "nginx:latest"
+  keep_locally = true
 }
+resource "docker_container" "nginx_container" {
+  name  = "terraform-nginx-custom"
+  image = docker_image.nginx_image.name
+
+  ports {
+    internal = 80
+    external = 8082
+  }
+  volumes {
+    host_path      = "C:/SfitBliss/index.html"
+    container_path = "/usr/share/nginx/html/index.html"
+  }
+}
+
+Index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Terraform Nginx</title>
+  <style>
+    body {
+      background-color: #f0f8ff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    h1 {
+      color: #007acc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hello from Nginx!</h1>
+  <p>This page is served using a Docker container created with Terraform by Prajyoti.</p>
+</body>
+</html>
+
+Check on localhost:8082
+
+KUBERNETES NGINX
+kubectl cluster-info
+kubectl get nodes 
+kubectl create deployment my-nginx --image=nginx 
+kubectl get deployments
+kubectl get pods 
+kubectl expose deployment my-nginx --type=NodePort --port=80
+kubectl get svc 
+http://localhost:/80
+kubectl get all 
+kubectl delete svc my-nginx  
+kubectl delete deployment my-nginx  
+kubectl get all  
+
+KUBERNETES Apache
+kubectl cluster-info
+kubectl get nodes 
+kubectl create deployment my-apache --image=httpd 
+kubectl expose deployment my-apache --type=NodePort --port=80  
+kubectl get svc my-apache  
+http://localhost:/80
+kubectl get all 
+kubectl delete svc my-apache  
+kubectl delete deployment my-apache  
+kubectl get all  
+
+AmazonS3FullAccess
+AWSLambdaBasicExecutionRole
+CloudWatchFullAccess
+
+
+Bucket using python
+
+import json
+import boto3
+
+s3 = boto3.client('s3')  
+def lambda_handler(event, context):
+    bucket = 'prajyotibucket1234'  
+    dataToUpload = {} 
+    dataToUpload['PID'] = '1400'
+    dataToUpload['DEPT'] = 'INFT'
+    dataToUpload['NAME'] = 'PRAJYOTI'
+    dataToUpload['FILE'] = 'ABC 1111'
+    fileName = 'ABC 1111' + '.json'
+    uploadByteStream = bytes(json.dumps(dataToUpload).encode('UTF-8'))
+    s3.put_object(Bucket=bucket, Key=fileName, Body=uploadByteStream)
+    print(f"Object has been uploaded to {bucket} with key {fileName}")
+
+
+
+
+Terraform with docker
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "2.14.0"
+    }
+  }
+}
+
+provider "docker" {
+  host = "npipe:////.//pipe//docker_engine" # This is for Windows Docker named pipe
+}
+
 resource "docker_image" "redis" {
-name="redis:latest"
+  name = "redis:latest"
 }
+
+
+Sonarqube notepad edit
+#Configure here general information about the environment, such as SonarQube server connection
+details for example
+#No information about specific project should appear here
+#----- Default SonarQube server
+#sonar.host.url=http://localhost:9000
+#----- Default source code encoding
+#sonar.sourceEncoding=UTF-8
+sonar.projectKey=SFIT_SAST3
+sonar.projectName=SFIT_SAST3
+sonar.projectVersion=1.0
+#sonar.projectBaseDir=C:\SFITJobs
+sonar.sources=C:\SFITJobs\PY Scripts
+
+Github
+Aws-codepipeline-s3-codedeploy-linux-2.0 (imosharma)
