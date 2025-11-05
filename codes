@@ -1,0 +1,36 @@
+
+To install terraform on a Windows/Linux machine and build, apply, and destroy EC2 instance
+over AWS using Terraform.(CODE)
+# Configure the AWS Provider
+provider "aws" {
+  access_key = ""
+  secret_key = ""
+  region     = "us-east-1"
+}
+
+# Launch an EC2 instance
+resource "aws_instance" "terraformUser" {
+  ami           = ""  # Replace with a region-specific valid AMI
+  instance_type = "t3.micro"
+  count = 3
+
+  tags = {
+Name = "praj"
+}
+}
+
+Q5) To deploy Docker and build, apply, and destroy docker image using Terraform.
+terraform{
+required_providers{
+docker={
+source="kreuzwerker/docker"
+version="2.14.0"
+}
+}
+}
+provider "docker"{
+host="npipe:////.//pipe//docker_engine"
+}
+resource "docker_image" "redis" {
+name="redis:latest"
+}
